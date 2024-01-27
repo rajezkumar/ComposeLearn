@@ -1,7 +1,14 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val apikeyPropertiesFile: File = rootProject.file("apikey.properties")
+val apikeyProperties = Properties()
+apikeyProperties.load(FileInputStream(apikeyPropertiesFile))
 
 android {
     namespace = "com.raj.marvelcompose"
@@ -18,6 +25,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        this.buildConfigField("String","MARVEL_KEY",apikeyProperties.getProperty("MARVEL_KEY"))
+        this.buildConfigField("String","MARVEL_SECRET",apikeyProperties.getProperty("MARVEL_SECRET"))
     }
 
     buildTypes {
@@ -38,6 +48,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
