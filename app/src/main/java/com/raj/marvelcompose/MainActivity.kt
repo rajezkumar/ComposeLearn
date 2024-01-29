@@ -31,16 +31,17 @@ import com.raj.marvelcompose.ui.theme.MarvelComposeTheme
 import com.raj.marvelcompose.view.CharacterDetailScreen
 import com.raj.marvelcompose.view.CollectionScreen
 import com.raj.marvelcompose.view.LibraryScreen
+import dagger.hilt.android.AndroidEntryPoint
 
 sealed class Screen(val route: String, @StringRes val resourceId: Int, val image: Int) {
-    object Library : Screen("library", R.string.library, R.drawable.library)
-    object Collection : Screen("collection", R.string.collection, R.drawable.collection)
-    object Character : Screen("character/{characterID}", R.string.character, R.drawable.character) {
+    data object Library : Screen("library", R.string.library, R.drawable.library)
+    data object Collection : Screen("collection", R.string.collection, R.drawable.collection)
+    data object Character : Screen("character/{characterID}", R.string.character, R.drawable.character) {
         fun createRoute(characterId: Int?) = "character/$characterId"
     }
 
 }
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
